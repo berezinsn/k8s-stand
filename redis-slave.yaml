@@ -36,10 +36,10 @@ spec:
       containers:
         - name: slave
           image: redis
+          envFrom:
+            - configMapRef:
+                name: common-config
           command: ["/bin/sh","-c"]
-          args: ["redis-server --slaveof $$REDIS_MASTER_HOST 6379"]
-          env:
-            - name: REDIS_MASTER_HOST
-              value: redis-master
+          args: ["redis-server --slaveof redis-master 6379"]
           ports:
             - containerPort: 6379

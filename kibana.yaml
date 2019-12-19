@@ -34,6 +34,6 @@ spec:
           ports:
             - containerPort: 5601
               name: web
-          env:
-            - name: ELASTICSEARCH_HOSTS
-              value: "http://elasticsearch.default.svc.cluster.local:9200"
+          envFrom:
+            - configMapRef:
+                name: common-config

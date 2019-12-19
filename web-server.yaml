@@ -31,10 +31,6 @@ spec:
           command: ["interactive", "ingress"]
           ports:
             - containerPort: 8085
-          env:
-            - name: ELASTICSEARCH_HOSTS
-              value: "http://elasticsearch.default.svc.cluster.local:9200"
-            - name: REDIS_SLAVE_HOST
-              value: redis-slave
-            - name: REDIS_MASTER_HOST
-              value: redis-master
+          envFrom:
+            - configMapRef:
+                name: common-config
