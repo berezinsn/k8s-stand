@@ -38,6 +38,6 @@ spec:
               name: client
             - containerPort: 9300
               name: nodes
-          envFrom:
-            - configMapRef:
-                name: common-config
+          env:
+            - name: discovery.type
+              value: single-node
