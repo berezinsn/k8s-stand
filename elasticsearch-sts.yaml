@@ -39,6 +39,21 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  name: elasticsearch-cluster
+  labels:
+    app: elasticsearch
+spec:
+  selector:
+    app: elasticsearch
+  ports:
+  - name: transport
+    port: 9300
+    protocol: TCP
+  clusterIP: None
+---
+apiVersion: v1
+kind: Service
+metadata:
   name: elasticsearch
   labels:
     app: elasticsearch
@@ -46,10 +61,8 @@ spec:
   selector:
     app: elasticsearch
   ports:
-    - port: 9300
-      name: nodes
-    - port: 9200
-      name: client
+    - name: http
+      port: 9200
 ---
 apiVersion: apps/v1
 kind: StatefulSet
@@ -71,16 +84,16 @@ spec:
           image: docker.elastic.co/elasticsearch/elasticsearch:7.1.1
           ports:
             - containerPort: 9200
-              name: client
+              name: http
             - containerPort: 9300
-              name: nodes
+              name: transport
           env:
             - name: discovery.type
               value: single-node
           volumeMounts:
             - name: es-pvc
-              mountPath: "/Volumes"
-          volumes:
-            - name: es-pvc
-              persistentVolumeClaim:
-                claimName: es-pvc
+              mountPath: /mnt
+      volumes:
+        - name: es-pvc
+          persistentVolumeClaim:
+            claimName: es-pvc
