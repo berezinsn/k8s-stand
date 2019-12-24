@@ -8,7 +8,7 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/mast
 kubectl get pods --all-namespaces -l app.kubernetes.io/name=ingress-nginx
 
 # Create a configmap from file
-kubectl create configmap common-config --from-file=demo.properties
+kubectl create configmap common-config --from-env-file=demo.properties
 
 # Deploy all entities
 kubectl apply -f ./

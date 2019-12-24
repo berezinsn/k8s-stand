@@ -9,11 +9,11 @@ spec:
   rules:
     - http:
         paths:
-          - path: /
+          - path: /1
             backend:
               serviceName: kibana
               servicePort: 5601
-          - path: /web
+          - path: /
             backend:
               serviceName: web-server
               servicePort: 8085
